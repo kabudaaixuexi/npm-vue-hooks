@@ -1,2 +1,3 @@
-declare const useState: any;
-export { useState };
+import useState from './packages/hooks-base/useState';
+import useReducer from './packages/hooks-base/useReducer';
+export { useState, useReducer };

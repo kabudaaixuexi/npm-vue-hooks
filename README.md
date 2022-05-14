@@ -2,9 +2,7 @@
 
 + 介绍
 
-不依赖任何外部库也无关开发模式，核心是利用proxy的代理特性进行数据代理，监听对象状态变更返回回调，类似vue2源码中的数据劫持依赖收集。
-
-兼容性同 [Proxy](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Proxy 'Proxy')
+封装了一些通用的hooks，将会大大的提高开发效率，使你的代码更具有可读性
 
 + 安装
 
@@ -12,47 +10,44 @@
 pnpm i @akar/vue-hooks 或 npm i @akar/vue-hooks
 ```
 
-+ 引入
++ useState
 
 ```
-/** store/index.ts */ 
+import { useState } from '@akar/vue-hooks'
 
-import moon from '@akar/proxy-property'
+const [count, setCount] = useState(0);
 
-const state = {
-    todo : {
-        github_account: 'kabudaaixuexi'
-    }
-}
-
-export default moon(
-    state,
-    {
-        usePersisted: false // 是否做session缓存
-    }
-)
-```
-
-+ 组件内使用
+setCount(1) // count = 1 
+setCount(() => 100) // count = 100
+setCount((count) => count.value + 1) // count = 101
 
 ```
-import moon from '@/store'
 
-moon.getState('todo') // kabudaaixuexi
++ useReducer
 
-moon.watch('todo',(newVal,oldVal)=>{
-    console.log(newVal) // { github_account: 'akar' }
-    console.log(oldVal) // { github_account: 'kabudaaixuexi' } 
-}, false) // 是否初始化时调用
+```
+import { useReducer } from '@akar/vue-hooks'
 
-moon.setState({
-    github_account: 'akar'
-}, 'todo')
+const [count, countDispatch] = useReducer((count, { type, payload }) => {
+  switch (type) {
+    case "add":
+      count.value = count.value + payload;
+      break;
+    case "reduce":
+      count.value = count.value - payload;
+      break;
+  }
+}, 100);
+
+countDispatch({ type: 'add', payload: 3 }) // count = 103
+
+countDispatch({ type: 'reduce', payload: 10 }) // count = 100
+
 ```
 
 
 + 建议
 
-@akar/proxy-property是一个小型的工具函数，代码简单，实现了单项数据流对数据的代理监控，只关心数据层，所以当涉及到视图层的时候需要利用watch函数主动更新视图。可以尝试在项目中使用。
+@akar/vue-hooks封装了一些基础的hooks，也将会提供一些稍微带有复杂度的通用hooks，可以不认可，但一定要会写这些hooks！此插件正在不断完善中
 
-[webpack5联邦模块学习点击这里](https://webpack.docschina.org/blog/2020-12-08-roadmap-2021/#hot-module-replacement-for-module-federation "Module Federation")
+[vue响应式基础学习点击这里](https://v3.cn.vuejs.org/api/basic-reactivity.html#reactive "Vue3")
