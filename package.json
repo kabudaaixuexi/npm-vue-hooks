@@ -1,6 +1,6 @@
 {
   "name": "@akar/vue-hooks",
-  "version": "0.0.3",
+  "version": "0.0.6",
   "description": "提供一些通用hooks",
   "author": "ningrui",
   "devDependencies": {
@@ -11,7 +11,7 @@
     "eslint-plugin-node": "^11.1.0",
     "typescript": "^4.6.3"
   },
-  "main": "lib/index.js",
+  "main": "core/index.ts",
   "scripts": {
     "build": "tsc",
     "co": "sh scripts/release.sh"
@@ -25,6 +25,9 @@
     "lib"
   ],
   "dependencies": {
+    "vue": "^3.2.33"
+  },
+  "peerDependencies": {
     "vue": "^3.2.33"
   },
   "license": "ISC",
