@@ -1,6 +1,6 @@
 {
   "name": "@akar/vue-hooks",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "提取了一些通用hooks",
   "author": "ningrui",
   "devDependencies": {
